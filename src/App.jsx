@@ -9,6 +9,10 @@ function App() {
     projects: [],
   });
 
+  console.log({projectsState})
+
+  let content;
+
   function handleStartAddProject() {
     setProjectsState((previousState) => {
       return {
@@ -18,10 +22,22 @@ function App() {
     });
   }
 
-  let content
+  function handleAddProject(projectData) {
+    setProjectsState((previousState) => {
+      const newProject = {
+        ...projectData,
+        id: Math.random(),
+      };
+
+      return {
+        ...previousState,
+        projects: [...previousState.projects, newProject],
+      }
+    });
+  }
 
   if (projectsState.selectedProjectId === null) {
-    content = <NewProject />
+    content = <NewProject onAdd={handleAddProject} />
   } else if (projectsState.selectedProjectId === undefined) {
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />
   }
