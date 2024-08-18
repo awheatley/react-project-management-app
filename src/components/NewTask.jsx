@@ -9,6 +9,10 @@ export default function NewTask({ onAddTask }) {
   }
 
   function handleClick() {
+    if (!newTask) {
+      return;
+    }
+    
     onAddTask(newTask);
     setNewTask("");
   }

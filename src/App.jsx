@@ -15,15 +15,6 @@ function App() {
     (project) => project.id === projectsState.selectedProjectId
   );
 
-  let content = (
-    <SelectedProject
-      project={selectedProject}
-      onAddTask={handleAddTask}
-      onDelete={handleDeleteProject}
-      tasks={projectsState.tasks}
-    />
-  );
-
   function handleStartAddProject() {
     setProjectsState((previousState) => {
       return {
@@ -93,7 +84,23 @@ function App() {
     });
   }
 
-  function handleDeleteTask() {}
+  function handleDeleteTask(id) {
+    setProjectsState((previousState) => {
+      return {
+        ...previousState,
+        tasks: previousState.tasks.filter((task) => task.id !== id),
+      };
+    });
+  }
+
+  let content = (
+    <SelectedProject
+      project={selectedProject}
+      onAddTask={handleAddTask}
+      onDeleteTask={handleDeleteTask}
+      tasks={projectsState.tasks}
+    />
+  );
 
   if (projectsState.selectedProjectId === null) {
     content = (
@@ -114,6 +121,7 @@ function App() {
         onStartAddProject={handleStartAddProject}
         onSelectProject={handleSelectProject}
         projects={projectsState.projects}
+        selectedProjectId={projectsState.selectedProjectId}
       />
       {content}
     </div>
